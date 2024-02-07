@@ -1,56 +1,71 @@
 #include "Tubo.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <cstdlib>
+using namespace std;
 using namespace sf; 
-Tubo::Tubo(float posX) {
-	int alturaMax =500;
-	int alturaMin = 100;
-	int aperturaMax = 400; 
-	int aperturaMin = 200; 
+Tubo::Tubo() {
 	
-	int alturaTubo = rand()%(alturaMax - alturaMin + 1) + alturaMin;
-	int aperturaTubo = rand()%(aperturaMax - aperturaMin + 1) + aperturaMin;
+	//Carga de textura (img)
+	t_down.loadFromFile("pipe.png");
+	s_down.setTexture(t_down);
+	// Establenciendo la textura
+	t_up.loadFromFile("pipe.png");
+	s_up.setTexture(t_up);
 	
 	
-	tuboSuperior.setSize(Vector2f(50,alturaTubo)); 
-	tuboSuperior.setPosition(posX, 0);
-	tuboSuperior.setFillColor(Color::Green);
-
-	//Inferior
-	tuboInferior.setSize(Vector2f(50,alturaTubo)); 
-	tuboInferior.setPosition(posX, alturaTubo + aperturaTubo);
-	tuboInferior.setFillColor(Color::Green);
 	
-	velocidad = 4.0;
-//	separacion = rand()% (300-100 + 1) + 100;
-//	
-	
+	velMov = 60.0f;//velocidad de movimineto de los tubos
+	frecuencia = 2;//cada 2 segundos spawnea otro tubo
 }
-	void Tubo::mover() { 
-		// Mover tubos a la derecha
-		tuboSuperior.move(-velocidad,0);
-		tuboInferior.move(-velocidad,0);
+	
+	float Tubo::verFrecuencia(){ return frecuencia;}
+	void Tubo::guardarSprite( Sprite &s){
+		pipeSprites.push_back(s);
+	}
 		
-		//Verificar si salen de la pantalla para reiniciar posicion
-		if(tuboSuperior.getPosition().x < -50) {
-			
-			int alturaTubo = rand()%(500 - 100 + 1) + 100;
-			int aperturaTubo = rand()%(300- 100+ 1) + 100;	
-				
-				
-			float nuevaPosX = 900; 
-			tuboSuperior.setSize(Vector2f(50,alturaTubo));
-			tuboSuperior.setPosition(nuevaPosX,650);
-			
-			tuboInferior.setSize(Vector2f(50,alturaTubo));
-			tuboSuperior.setPosition(nuevaPosX,alturaTubo + aperturaTubo);
-		}
+		
+	void Tubo::mostrarTuboInf(Tubo &tubo){
+	
+		Sprite& spriteInf = tubo.getSpriteInf();
+		spriteInf.setPosition(900, -1200);
+		guardarSprite(spriteInf);
 	}
-	
-	
-	void Tubo::mostrar(RenderWindow &w) { 
-		w.draw(tuboSuperior); 
-		w.draw(tuboInferior); 
+	void Tubo::mostrarTuboSup (Tubo &tubo){
+		
+		Sprite& spriteSup = tubo.getSpriteUp(); 
+		spriteSup.setPosition(900, 600);
+		guardarSprite(spriteSup);
 	}
+
+	void Tubo::mover(float dt){
+	for(unsigned short int i = 0; i<pipeSprites.size(); i++) { 
+		Vector2f position = pipeSprites.at(i).getPosition();
+		float movimiento = velMov * dt;
+		pipeSprites.at(i).move(-movimiento, 0);
+	}
+
+}
+
 	
+void Tubo::mostrar(RenderWindow &w) {
+		for (unsigned short int i = 0; i < pipeSprites.size(); i++) {
+			w.draw(pipeSprites.at(i));
+	}
+}
+
+void Tubo::borrarTubos(){ 
+	pipeSprites.clear();
+}
+	
+	
+
+//	void Tubo::mostrarTuboInv(Tubo &tubo){
+//
+//		Sprite& spriteInv = tubo.getSpriteInv(); 
+//		spriteInv.setPosition(400, 300);
+//		spriteInv.setColor(sf::Color(0,0,0,0));
+//		guardarSprite(spriteInv);
+//}
+
 

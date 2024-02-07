@@ -12,10 +12,13 @@ private:
 	Sprite s; 
 	float escalaX;
 	float escalaY;
+	float velX, velY, posX, velMov, transicion;
+	
 	
 public:
 	Fondo();
 	void mostrar(RenderWindow &w);
+	void moverFondo();
 
 };
 
