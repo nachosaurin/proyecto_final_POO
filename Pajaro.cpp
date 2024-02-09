@@ -9,13 +9,13 @@ Pajaro::Pajaro(){
 		s.setPosition(posicionInicial); 
 		
 		//escalado del pajaro
-		s.setScale(0.2,0.2);
+		s.setScale(0.15,0.15);
 	}
 
 
 //estas funciones podrian estar todas en una sola
-bool Pajaro::fueraDePantalla() { 
-	return s.getPosition().y < 0 || s.getPosition().y > 900 ;
+bool Pajaro::fueraDePantalla(RenderWindow &w) { 
+	return s.getPosition().y < 0 || s.getPosition().y > w.getSize().y  ;
 }
 
 
@@ -23,7 +23,7 @@ void Pajaro::reiniciarPosicion() {
 	s.setPosition(posicionInicial);
 }
 
-void Pajaro::mover() {
+void Pajaro::mover(RenderWindow &w) {
 		
 	if(Keyboard::isKeyPressed(Keyboard::Up)){ 
 		velocidadY = impulso;
@@ -34,7 +34,7 @@ void Pajaro::mover() {
 		s.move(0,velocidadY);
 		velocidadY += gravedad;
 	}
-	if(fueraDePantalla()) { 
+	if(fueraDePantalla(w)) { 
 		reiniciarPosicion();
 		enMovimiento = false;
 	}

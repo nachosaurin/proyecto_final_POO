@@ -10,15 +10,20 @@ class Fondo {
 private:
 	Texture t; 
 	Sprite s; 
+	Texture t_piso; 
+	Sprite s_piso;
 	float escalaX;
 	float escalaY;
 	float velX, velY, posX, velMov, transicion;
 	
 	
+	
 public:
 	Fondo();
+	
 	void mostrar(RenderWindow &w);
-	void moverFondo();
+	float alturaFondo();
+	void mostrarPiso(RenderWindow &w);
 
 };
 

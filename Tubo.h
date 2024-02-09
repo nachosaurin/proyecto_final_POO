@@ -19,6 +19,8 @@ private:
 	float velMov;
 	float movimiento;
 	float frecuencia;
+	int spawnY;
+	bool enMovimiento;
 	
 
 public:
@@ -31,14 +33,14 @@ public:
 	Sprite& getSpriteInv() {return s_down;}
 	
 	
-	
+	void randomizarPosicionY(RenderWindow &w);
 	void guardarSprite(Sprite &s); 
 	
 	
 	void mostrar(RenderWindow &w);
 	void alturasAleatorias();
-	void mostrarTuboInf(Tubo &tubo);
-	void mostrarTuboSup (Tubo &tubo);
+	void mostrarTuboInf(Tubo &tubo, const RenderWindow &w);
+	void mostrarTuboSup (Tubo &tubo, const RenderWindow &w);
 	void mostrarTuboInv(Tubo &tubo);
 	void mover(float dt);
 	float verFrecuencia();

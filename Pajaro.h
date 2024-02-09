@@ -17,9 +17,9 @@ private:
 	bool enMovimiento = false; //Indicador de estado del pajaro (quieto/moviendose)
 public:
 	Pajaro();
-	void mover();
+	void mover(RenderWindow &w);
 	void mostrar(RenderWindow &w);
-	bool fueraDePantalla();
+	bool fueraDePantalla(RenderWindow &w);
 	void reiniciarPosicion();
 };
 
